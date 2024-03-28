@@ -12,19 +12,21 @@ export default function CooldownViolationOverlay(props) {
 
   const {queueData} = useContext(QueueDataContext);
   function callAddQuestionAPIOverrideCooldown() {
-    HomeService.addQuestion(
-        JSON.stringify({
-          andrewID: andrewID,
-          question: question,
-          location: location,
-          topic: topic,
-          overrideCooldown: true,
-        }),
-    ).then((res) => {
-      if (res.status === 200) {
-        setOpen(false);
-      }
-    });
+    if (queueData.allowCDOverride) {
+      HomeService.addQuestion(
+          JSON.stringify({
+            andrewID: andrewID,
+            question: question,
+            location: location,
+            topic: topic,
+            overrideCooldown: true,
+          }),
+      ).then((res) => {
+        if (res.status === 200) {
+          setOpen(false);
+        }
+      });
+    } else return;
   }
 
   if (queueData.allowCDOverride) {

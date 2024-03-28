@@ -518,6 +518,9 @@ exports.post_add_question = function (req, res) {
             }
 
             // check for cooldown violation
+            if (overrideCooldown && !settings.get_queue_settings().allowCDOverride) {
+                throw new Error('Cooldown override is disabled');
+            }
             let rejoinTime = settings.get_admin_settings().rejoinTime
             return Promise.props({
                 questions: models.question.findAll({
