@@ -318,7 +318,7 @@ exports.post_update_enforce_cmu_email = function (req, res) {
 exports.post_update_allow_cooldown_override = function (req, res) {
     if (!req.user || !req.user.isAdmin) {
         respond_error(req, res, "You don't have permission to perform this operation", 403);
-        return; 
+        return;
     }
 
     var allowCDOverride = req.body.allowCDOverride;
