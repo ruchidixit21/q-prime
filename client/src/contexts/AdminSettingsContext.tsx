@@ -15,7 +15,6 @@ const AdminSettingsContext = createContext({
     currSem: '',
     slackURL: undefined,
     enforceCMUEmail: true,
-    allowCDOverride: true,
   },
   setAdminSettings: ((adminSettings: AdminSettings) => {}) as React.Dispatch<React.SetStateAction<AdminSettings>>,
 });
@@ -30,7 +29,6 @@ const AdminSettingsContextProvider = ({children}: {children: React.ReactNode}) =
     currSem: '',
     slackURL: undefined,
     enforceCMUEmail: true,
-    allowCDOverride: true,
   });
 
   // Load admin settings if user is an admin

@@ -24,9 +24,11 @@ export default function ConfigSettings(props) {
     setCurrSem(adminSettings.currSem);
     setSlackURL(adminSettings.slackURL);
     setEnforceCMUEmail(adminSettings.enforceCMUEmail);
-    setAllowCDOverride(adminSettings.allowCDOverride);
+  }, [adminSettings]);
+  useEffect(() => {
+    setAllowCDOverride(queueData.allowCDOverride);
     setQuestionsURL(queueData.questionsURL);
-  }, [adminSettings, queueData]);
+  }, [queueData]);
 
   const handleUpdateSemester = (event) => {
     event.preventDefault();
