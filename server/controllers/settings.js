@@ -13,6 +13,7 @@ const home = require('./home');
 // In production, these should be cleared
 var fs = require('fs');
 const defaultAdminSettings = {
+    courseName: "",
     currSem: "S23",
     slackURL: null,
     questionsURL: '',
@@ -203,6 +204,33 @@ exports.post_update_notifs = function (req, res) {
 
 /** ADMIN FUNCTIONS **/
 /** Config Settings **/
+exports.post_update_course_name = function (req, res) {
+    if (!req.user || !req.user.isAdmin) {
+        respond_error(req, res, "You don't have permissions to perform this operation", 403);
+        return;
+    }
+
+    var courseName = req.body.courseName;
+    // @Review: Any validations needed here (such as empty string)?
+    if (!courseName) {
+        respond_error(req, res, "Invalid/missing parameters in request", 400);
+        return;
+    }
+
+    if (adminSettings.courseName == courseName) {
+        respond_success(req, res);
+        return;
+    }
+
+    // @Review: Should the courseName be stored in the database? Currently, only
+    // storing it in the adminSettings.json file. Perhaps could be part of a
+    // larger medium-sized effort to move all admin settings to a new table in the
+    // database.
+    adminSettings.courseName = courseName;
+    writeAdminSettings(adminSettings);
+    respond_success(req, res, `Course name updated successfully to ${courseName}`);
+}
+
 exports.post_update_semester = function (req, res) {
     if (!req.user || !req.user.isAdmin) {
         respond_error(req, res, "You don't have permissions to perform this operation", 403);
