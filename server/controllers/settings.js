@@ -271,7 +271,6 @@ exports.post_update_course_name = function (req, res) {
   // database.
   adminSettings.courseName = courseName;
   writeAdminSettings(adminSettings);
-  home.emit_new_queue_data();
   respond_success(
     req,
     res,
